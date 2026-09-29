@@ -1,33 +1,71 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+
 <title>MRKOO Tesla CarPlay</title>
+
 <style>
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  background:#000;
-  overflow:hidden;
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
 }
-iframe{
-  width:100%;
-  height:100%;
-  border:none;
+
+#frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: 0;
+    display: block;
+    transform-origin: 0 0;
 }
 </style>
 </head>
+
 <body>
-<iframe src="https://www.zbox.link"></iframe>
+
+<iframe
+    id="frame"
+    src="https://www.zbox.link"
+    allow="autoplay; fullscreen"
+    allowfullscreen
+    scrolling="no">
+</iframe>
+
 <script>
-function resize(){
- document.body.style.width=window.innerWidth+'px';
- document.body.style.height=window.innerHeight+'px';
+
+const SOURCE_W = 1920;
+const SOURCE_H = 1080;
+
+const frame = document.getElementById('frame');
+
+frame.style.width = SOURCE_W + 'px';
+frame.style.height = SOURCE_H + 'px';
+
+function fit() {
+
+    const vw = document.documentElement.clientWidth;
+    const vh = document.documentElement.clientHeight;
+
+    const sx = vw / SOURCE_W;
+    const sy = vh / SOURCE_H;
+
+    frame.style.transform =
+        'scale(' + sx + ', ' + sy + ')';
 }
-resize();
-window.addEventListener('resize',resize);
+
+window.addEventListener('resize', fit);
+window.addEventListener('orientationchange', fit);
+
+fit();
+
 </script>
+
 </body>
 </html>
